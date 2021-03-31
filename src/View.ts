@@ -2,7 +2,6 @@ import { storeFilterStatus } from './Store';
 import { handleDD } from './dd';
 import { template } from './Template';
 import { emitter } from './Events';
-// const storeFilterStatus = new StoreFilterStatus();
 
 class View {
   //input field
@@ -152,5 +151,5 @@ class View {
   }
 }
 const view = new View();
-// export default { view, storeFilterStatus };
+
 export { view };

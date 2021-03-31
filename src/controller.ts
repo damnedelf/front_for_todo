@@ -3,7 +3,7 @@ import { storeTodos } from './Store';
 import { storeFilterStatus } from './Store';
 import { TodoModel } from './TodoModel';
 import { emitter } from './Events';
-// import StoreFilterStatus from "./Store.js";
+
 import './styles.scss';
 import './nullstyle.scss';
 

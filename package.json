@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "webpack serve --mode=development --progress",
     "build": "webpack",
-    "build:prod": "webpack --config webpack.config.prod.js"
+    "build:prod": "webpack --config webpack.prod.js"
+   
   },
   "repository": {
     "type": "git",
@@ -14,10 +15,8 @@
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kelreel/webpack-ts-sass-config/issues"
-  },
-  "homepage": "https://github.com/kelreel/webpack-ts-sass-config#readme",
+
+
   "devDependencies": {
     "@types/node": "^14.14.37",
     "clean-webpack-plugin": "^3.0.0",

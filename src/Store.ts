@@ -1,4 +1,5 @@
-const db = (window as any)._DB_;
+// const db = (window as any)._DB_;
+import { db } from './firestoreConfig';
 const todosRef = db.collection('todos');
 
 class StoreTodos {

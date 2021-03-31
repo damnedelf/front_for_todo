@@ -1,6 +1,5 @@
-// import StoreTodos from "../../build/src/Store.js";
 import { storeTodos } from './Store';
-// const store = new StoreTodos();
+
 //block of drag and drop +
 function handleDD() {
   const todoList = document.getElementsByClassName('task-list');
@@ -29,6 +28,7 @@ function handleDrag(event: eventDD) {
     y = event.clientY;
 
   selectedItem.classList.add('drag-sort-active');
+
   let swapItem = document.elementFromPoint(x, y) === null ? selectedItem : document.elementFromPoint(x, y);
 
   if (list === swapItem.parentNode) {
