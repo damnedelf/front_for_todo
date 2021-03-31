@@ -31,8 +31,8 @@ class View {
       }
     });
     //Mark&Delete
-    this.tasklist.addEventListener('click', function (e: Event): void {
-      let x: any = e.target;
+    this.tasklist.addEventListener('click', function (e): void {
+      let x = e.target as Element;
       let id: string;
       if (x.className == 'close') {
         id = x.id.slice(7);
@@ -65,7 +65,7 @@ class View {
     template.insertTodo(todo);
     View.showFooter(true);
     View.count();
-    handleDD();
+    // handleDD();
   }
   //delete todo from DOM
   delete(id: string): void {
@@ -83,7 +83,7 @@ class View {
     let todosArray = Array.from(document.querySelectorAll('.task-list-task'));
 
     for (let todo of todosArray) {
-      let checkbox: any = todo.querySelector('.checkbox-input');
+      let checkbox: HTMLInputElement = todo.querySelector('.checkbox-input');
 
       checkbox.checked = condition;
 
@@ -106,7 +106,7 @@ class View {
   }
   //counts
   static count(): void {
-    let counter: any = document.querySelector('.counter');
+    let counter: HTMLDivElement = document.querySelector('.counter');
     let todoArray = document.querySelectorAll('.task-list-task');
     let x: number | null = todoArray.length;
     counter.innerHTML = `todo amount: ${x}`;
@@ -119,7 +119,7 @@ class View {
     if (filterCondition == 'noFilter') {
       return;
     }
-    let todosArray: any[] = Array.from(document.querySelectorAll('.task-list-task'));
+    let todosArray: Element[] = Array.from(document.querySelectorAll('.task-list-task'));
 
     if (filterCondition) {
       await storeFilterStatus.setFilterStatus(filterCondition);

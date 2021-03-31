@@ -4,15 +4,15 @@ class Template {
   private buildTodo(todo: todoObj): HTMLDivElement {
     let newTodoWrapper = document.createElement('div');
     let taskName = document.createElement('div');
-    taskName.innerHTML = todo.name;
+    taskName.innerHTML = todo.data.name;
     taskName.className = 'taskname';
-    if (todo.isCompleted) {
+    if (todo.data.isCompleted) {
       newTodoWrapper.className = 'task-list-task completed';
     } else {
       newTodoWrapper.className = 'task-list-task';
     }
     newTodoWrapper.id = todo.id;
-    newTodoWrapper.setAttribute('data-order', `${todo.order}`);
+    newTodoWrapper.setAttribute('data-order', `${todo.data.order}`);
     newTodoWrapper.setAttribute('draggable', 'true');
     newTodoWrapper.append(taskName);
     return newTodoWrapper;
@@ -27,7 +27,7 @@ class Template {
     let checkboxWrapper = document.createElement('div');
     let checkbox = document.createElement('input');
     let checkboxLabel = document.createElement('label');
-    checkbox.checked = todo.isCompleted;
+    checkbox.checked = todo.data.isCompleted;
     checkboxWrapper.className = 'checkbox';
     checkbox.setAttribute('type', 'checkbox');
     checkbox.id = `mark-${todo.id}`;

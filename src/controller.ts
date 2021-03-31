@@ -3,9 +3,11 @@ import { storeTodos } from './Store';
 import { storeFilterStatus } from './Store';
 import { TodoModel } from './TodoModel';
 import { emitter } from './Events';
+import 'smooth-dnd';
 
 import './styles.scss';
 import './nullstyle.scss';
+import { handleDD } from './dd';
 
 let orderN: number = 0;
 
@@ -20,13 +22,16 @@ storeTodos
     }
 
     if (todoArr.length > 1) {
-      orderN = todoArr[todoArr.length - 1].order;
+      orderN = todoArr[todoArr.length - 1].data.order;
     }
   })
   .then(() => {
     if (filterCondition) {
       view.filter(filterCondition);
     }
+  })
+  .then(() => {
+    handleDD();
   });
 //turn on all listeners
 view.listenAll();
@@ -36,8 +41,11 @@ emitter.subscribe(`event:onEnter`, async function (name: string) {
   orderN++;
   let todoObj: todoObj = new TodoModel(name, orderN);
 
-  storeTodos.post(todoObj);
-  view.printTodo(todoObj);
+  storeTodos.post(todoObj).then((result) => {
+    todoObj.id = result;
+    view.printTodo(todoObj);
+  });
+  // handleDD();
 });
 
 emitter.subscribe('event:Delete', function (id: string) {
@@ -46,7 +54,7 @@ emitter.subscribe('event:Delete', function (id: string) {
 });
 emitter.subscribe('event:Mark', function (id: string) {
   view.mark(id);
-  storeTodos.update(id);
+  storeTodos.update(id, null);
 });
 emitter.subscribe('event:MarkAll', function (condition: boolean) {
   view.markAll(!condition);

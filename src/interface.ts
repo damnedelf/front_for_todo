@@ -1,9 +1,12 @@
-//describes solo todo item
-interface todoObj {
-  id: string;
+interface Idata {
   name: string;
   isCompleted: boolean;
   order: number;
+}
+//describes solo todo item
+interface todoObj {
+  id: string;
+  data: Idata;
 }
 
 //describe this for btn keydown listener

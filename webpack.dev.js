@@ -5,10 +5,16 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
   entry: './src/controller.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle-[hash].js',
+    filename: 'bundle-[fullhash].js',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -69,4 +75,5 @@ module.exports = {
       filename: 'style-[hash].css',
     }),
   ],
+  devtool: 'source-map',
 };
