@@ -112,6 +112,8 @@ Webpack bundling all code (html\styles\ts) and put to the /dist folder. Just run
 <br />
 mapping disabled
 
+**Also u can change firestore config by modifying firestoreConfig.ts**
+
 ## Contact
 
 damnedelf@ya.ru - email
