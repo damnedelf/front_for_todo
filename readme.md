@@ -49,7 +49,7 @@
 
 ### Built With
 
-- Typescript.
+- Typescript. Includes webpack/prettier/eslint configs
 
 ## Getting Started
 
@@ -86,6 +86,7 @@ After installation u can build bundle or run webpack server.
    ```
 
 Server is listening localhost:3000 by default. U can change port by modify file webpack.dev.js (option devServer.port)
+<br />
 mapping enabled
 
 2. Bundling webpack in development mode
@@ -95,6 +96,7 @@ npm run build:dev
 ```
 
 Webpack bundling all code (html\styles\ts) and put to the /dist folder. Just run index.html in browser.
+<br />
 mapping enabled;
 
 3. Bundling webpack in production mode
@@ -103,6 +105,7 @@ mapping enabled;
    ```
 
 Webpack bundling all code (html\styles\ts) and put to the /dist folder. Just run index.html in browser.
+<br />
 mapping disabled
 
 ## Contact
