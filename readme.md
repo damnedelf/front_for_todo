@@ -70,9 +70,13 @@ This is an example of how to list things you need to use the software and how to
    ```sh
      git clone https://github.com/damnedelf/firebase_WP_LINT_TS.git
    ```
-2. Install NPM packages
+2. GO to project folder
    ```sh
-   npm install
+   cd firebase_WP_LINT_TS
+   ```
+3. Install dependency packages
+   ```sh
+      npm install
    ```
 
 ## Usage
