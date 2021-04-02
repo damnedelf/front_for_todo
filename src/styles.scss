@@ -5,6 +5,22 @@ $task-height-low-res: 100px;
 body {
   background-image: url(assets/img/background.jpg);
 }
+[draggable] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.draggable {
+  cursor: move;
+  margin-bottom: 1rem;
+  user-select: none;
+}
+
+.stels {
+  display: none;
+}
 .input-list-wrapper {
   position: relative;
   display: flex;

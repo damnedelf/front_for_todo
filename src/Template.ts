@@ -7,9 +7,9 @@ class Template {
     taskName.innerHTML = todo.data.name;
     taskName.className = 'taskname';
     if (todo.data.isCompleted) {
-      newTodoWrapper.className = 'task-list-task completed';
+      newTodoWrapper.className = 'task-list-task completed dragster-block';
     } else {
-      newTodoWrapper.className = 'task-list-task';
+      newTodoWrapper.className = 'task-list-task dragster-block';
     }
     newTodoWrapper.id = todo.id;
     newTodoWrapper.setAttribute('data-order', `${todo.data.order}`);

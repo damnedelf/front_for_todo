@@ -3,7 +3,6 @@ import { storeTodos } from './Store';
 import { storeFilterStatus } from './Store';
 import { TodoModel } from './TodoModel';
 import { emitter } from './Events';
-import 'smooth-dnd';
 
 import './styles.scss';
 import './nullstyle.scss';
@@ -30,9 +29,7 @@ storeTodos
       view.filter(filterCondition);
     }
   })
-  .then(() => {
-    handleDD();
-  });
+  .then(() => {});
 //turn on all listeners
 view.listenAll();
 

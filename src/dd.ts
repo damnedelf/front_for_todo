@@ -1,58 +1,76 @@
-//DnD npm init
-import { smoothDnD } from 'smooth-dnd';
-
 import { storeTodos } from './Store';
 
 //block of drag and drop +
 function handleDD() {
-  let container: any = document.querySelector('.task-list');
-  let id = '';
+  const tasksListElement = document.querySelector('.task-list');
+  const taskElements: HTMLDivElement[] = Array.from(tasksListElement.querySelectorAll('.task-list-task'));
 
-  smoothDnD(container, {
-    lockAxis: 'y',
-    behaviour: 'move',
-    groupName: undefined,
-    autoScrollEnabled: false,
-    dragHandleSelector: '.task-list',
-    dragClass: '.task-list-task',
-    dropPlaceholder: true,
-    removeOnDropOut: true,
+  for (let task of taskElements) {
+    task.draggable = true;
+  }
 
-    //here we get id of touched for draggin element
-    onDropReady: (res) => {
-      id = res.element.id;
-    },
-    //here we get nodelist of tasks after drop is over and with id from last func get needed orderN => firestore
-    onDrop: () => {
-      let todoNodeArray = Array.from(document.querySelectorAll('.task-list-task'));
-      let todoArray: any = [];
-      for (let todoNode of todoNodeArray) {
-        todoArray.push(todoNode);
-      }
+  tasksListElement.addEventListener('dragstart', (evt) => {
+    let target = evt.target as HTMLTextAreaElement;
+    target.classList.add('selected');
+  });
 
-      let currentElem = todoArray.find((item: HTMLElement) => item.id == id).parentNode;
-      let nextElem: HTMLDivElement | null = null;
-      let previosElem: HTMLDivElement | null = null;
-      if (currentElem.nextElementSibling) {
-        nextElem = currentElem.nextElementSibling.firstChild;
-      }
-      if (currentElem.previousElementSibling) {
-        previosElem = currentElem.previousElementSibling.firstChild;
-      }
-      let reqBody = { id: id, order: 0 };
-      let orderN = 0;
-      if (nextElem === null) {
-        orderN = +previosElem.dataset.order * 2 + 1;
-      } else if (previosElem === null) {
-        orderN = +nextElem.dataset.order - 0.1;
-      } else {
-        orderN = (+previosElem.dataset.order + +nextElem.dataset.order) / 2;
-      }
+  tasksListElement.addEventListener('dragend', (evt) => {
+    let target = evt.target as HTMLTextAreaElement;
+    target.classList.remove('selected');
+    //work with order using Nodelist
+    let reqBody = { id: target.id, order: 0 };
+    let todoNodeArray = Array.from(document.querySelectorAll('.task-list-task'));
+    let todoArray: any[] = [];
+    for (let todoNode of todoNodeArray) {
+      todoArray.push(todoNode);
+    }
 
-      reqBody.order = orderN;
-      //front=> back element id to change + order to change
-      storeTodos.update(null, reqBody);
-    },
+    let currentElem = todoArray.find((item) => item.id == reqBody.id);
+
+    let nextElem = currentElem.nextElementSibling || 0;
+    let previosElem = currentElem.previousElementSibling || 0;
+
+    let orderN = 0;
+    if (nextElem === 0) {
+      orderN = +previosElem.dataset.order * 2 + 1;
+    } else if (previosElem === 0) {
+      orderN = +nextElem.dataset.order - 0.1;
+    } else {
+      orderN = (+previosElem.dataset.order + +nextElem.dataset.order) / 2;
+    }
+
+    reqBody.order = orderN;
+    //element id to change + order to change
+    storeTodos.update(null, reqBody);
+  });
+
+  const getNextElement = (cursorPosition: number, currentElement: HTMLDivElement) => {
+    const currentElementCoord = currentElement.getBoundingClientRect();
+    const currentElementCenter = currentElementCoord.y + currentElementCoord.height / 2;
+
+    const nextElement = cursorPosition < currentElementCenter ? currentElement : currentElement.nextElementSibling;
+
+    return nextElement;
+  };
+
+  tasksListElement.addEventListener('dragover', (evt: any) => {
+    evt.preventDefault();
+
+    const activeElement = tasksListElement.querySelector('.selected');
+    const currentElement = evt.target;
+    const isMoveable = activeElement !== currentElement && currentElement.classList.contains('task-list-task');
+
+    if (!isMoveable) {
+      return;
+    }
+
+    const nextElement = getNextElement(evt.clientY, currentElement);
+
+    if ((nextElement && activeElement === nextElement.previousElementSibling) || activeElement === nextElement) {
+      return;
+    }
+
+    tasksListElement.insertBefore(activeElement, nextElement);
   });
 }
 

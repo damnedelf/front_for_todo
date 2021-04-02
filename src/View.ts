@@ -65,7 +65,7 @@ class View {
     template.insertTodo(todo);
     View.showFooter(true);
     View.count();
-    // handleDD();
+    handleDD();
   }
   //delete todo from DOM
   delete(id: string): void {

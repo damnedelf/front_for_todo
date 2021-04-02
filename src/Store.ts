@@ -63,7 +63,6 @@ class StoreTodos {
     try {
       let allTodos = await db.collection('todos').get();
       await allTodos.forEach((todo: QueryDocumentSnapshot) => {
-        console.log(todo);
         todo.ref.update({
           isCompleted: status,
         });

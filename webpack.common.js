@@ -14,11 +14,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
   },
-  devServer: {
-    contentBase: 'dist',
-    compress: true,
-    port: 3000,
-  },
+
   module: {
     rules: [
       {
