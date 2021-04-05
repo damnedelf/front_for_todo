@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 type eventDataType = string | boolean | number;
 
 class EventHandler {
@@ -6,16 +7,17 @@ class EventHandler {
   constructor() {
     this.events = {};
   }
+
   subscribe(eventName: string, fn: Function) {
     if (!this.events[eventName]) {
       this.events[eventName] = [];
     }
     this.events[eventName].push(fn);
   }
-  emit(this: any, eventName: string, data: eventDataType) {
+  emit(eventName: string, data: eventDataType) {
     const event = this.events[eventName];
     if (event) {
-      event.forEach((fn: any) => {
+      event.forEach((fn: Function) => {
         fn.call(null, data);
       });
     }

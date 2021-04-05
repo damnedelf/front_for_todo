@@ -7,15 +7,15 @@ import { emitter } from './ts/Events';
 import './styles/styles.scss';
 import './styles/nullstyle.scss';
 
-let orderN: number = 0;
+let orderN: number;
 
 //looking if any filter is up
-let filterCondition = storeFilterStatus.getFilterStatus();
+const filterCondition = storeFilterStatus.getFilterStatus();
 //if any data in db build dom/looking for filters and filter/turn on drag and drop
 storeTodos
   .getAll()
   .then((todoArr) => {
-    for (let todo of todoArr) {
+    for (const todo of todoArr) {
       view.printTodo(todo);
     }
 
@@ -28,20 +28,20 @@ storeTodos
       view.filter(filterCondition);
     }
   })
-  .then(() => {});
+  .then(() => view.listenAll());
 //turn on all listeners
-view.listenAll();
+// view.listenAll();
 
 //subscribes on all handmade events
 emitter.subscribe(`event:onEnter`, async function (name: string) {
   orderN++;
-  let todoObj: ItodoObj = new TodoModel(name, orderN);
+  const todoObj: ItodoObj = new TodoModel(name, orderN);
 
   storeTodos.post(todoObj).then((result) => {
     todoObj.id = result;
     view.printTodo(todoObj);
   });
-  // handleDD();
+  view.listenAll();
 });
 
 emitter.subscribe('event:Delete', function (id: string) {

@@ -4,11 +4,9 @@ import { db } from './firestoreConfig';
 const todosRef = db.collection('todos');
 
 class StoreTodos {
-  constructor() {}
-  //new todo
   async post(todo: ItodoObj) {
     try {
-      let newTodo = await todosRef.add({
+      const newTodo = await todosRef.add({
         name: `${todo.data.name}`,
 
         isCompleted: todo.data.isCompleted,
@@ -21,10 +19,10 @@ class StoreTodos {
   }
   //get todoArray
   async getAll() {
-    let todoArray: ItodoObj[] = [];
+    const todoArray: ItodoObj[] = [];
 
     try {
-      let todos = await todosRef.orderBy('order').get();
+      const todos = await todosRef.orderBy('order').get();
       await todos.forEach((doc: QueryDocumentSnapshot<any>) => {
         todoArray.push({ data: doc.data(), id: doc.id });
       });
@@ -42,16 +40,14 @@ class StoreTodos {
       console.log(`delete: ===>>> ${error}`);
     }
   }
-  // async deleteCompleted(){
 
-  // }
   // mark isCompleted
   async update(id: string, reqBody: IorderBody) {
     try {
       if (!reqBody) {
-        let todoForUpdate = await todosRef.doc(id).get();
+        const todoForUpdate = await todosRef.doc(id).get();
 
-        let condition = todoForUpdate.data().isCompleted;
+        const condition = todoForUpdate.data().isCompleted;
 
         todosRef.doc(id).update({ isCompleted: !condition });
       } else {
@@ -64,7 +60,7 @@ class StoreTodos {
   ///for mark/unmark all isCompleted
   async updateAll(status: boolean) {
     try {
-      let allTodos = await db.collection('todos').get();
+      const allTodos = await db.collection('todos').get();
       await allTodos.forEach((todo: QueryDocumentSnapshot) => {
         todo.ref.update({
           isCompleted: status,
@@ -77,7 +73,6 @@ class StoreTodos {
 }
 //local storage for filter condition
 class StoreFilterStatus {
-  constructor() {}
   setFilterStatus(status: string): void {
     localStorage.setItem('status', status);
   }
