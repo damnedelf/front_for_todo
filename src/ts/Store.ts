@@ -6,7 +6,7 @@ const todosRef = db.collection('todos');
 class StoreTodos {
   constructor() {}
   //new todo
-  async post(todo: todoObj) {
+  async post(todo: ItodoObj) {
     try {
       let newTodo = await todosRef.add({
         name: `${todo.data.name}`,
@@ -21,7 +21,7 @@ class StoreTodos {
   }
   //get todoArray
   async getAll() {
-    let todoArray: todoObj[] = [];
+    let todoArray: ItodoObj[] = [];
 
     try {
       let todos = await todosRef.orderBy('order').get();
@@ -42,8 +42,11 @@ class StoreTodos {
       console.log(`delete: ===>>> ${error}`);
     }
   }
+  // async deleteCompleted(){
+
+  // }
   // mark isCompleted
-  async update(id: string, reqBody: orderBody) {
+  async update(id: string, reqBody: IorderBody) {
     try {
       if (!reqBody) {
         let todoForUpdate = await todosRef.doc(id).get();

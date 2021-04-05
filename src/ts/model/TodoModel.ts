@@ -1,5 +1,5 @@
 //model
-class TodoModel {
+class TodoModel implements Idata {
   id: string;
   name: string;
   isCompleted: boolean;

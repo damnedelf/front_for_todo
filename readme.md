@@ -13,8 +13,8 @@
   </p>
 </p>
 
-<details open="open">
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <details open="open">
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
@@ -61,7 +61,7 @@ This is an example of how to list things you need to use the software and how to
 
 - npm
   ```sh
-  npm install npm@latest -g
+  npm install npm@7.5.4
   ```
 
 ### Installation

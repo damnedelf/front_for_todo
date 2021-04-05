@@ -1,7 +1,7 @@
 class Template {
   constructor() {}
   //build todo=>DoM
-  private buildTodo(todo: todoObj): HTMLDivElement {
+  private buildTodo(todo: ItodoObj): HTMLDivElement {
     let newTodoWrapper = document.createElement('div');
     let taskName = document.createElement('div');
     taskName.innerHTML = todo.data.name;
@@ -17,13 +17,13 @@ class Template {
     newTodoWrapper.append(taskName);
     return newTodoWrapper;
   }
-  private buildDelBtn(todo: todoObj): HTMLButtonElement {
+  private buildDelBtn(todo: ItodoObj): HTMLButtonElement {
     let button = document.createElement('button');
     button.className = 'close';
     button.id = `delete-${todo.id}`;
     return button;
   }
-  private buildCheckbox(todo: todoObj): HTMLDivElement {
+  private buildCheckbox(todo: ItodoObj): HTMLDivElement {
     let checkboxWrapper = document.createElement('div');
     let checkbox = document.createElement('input');
     let checkboxLabel = document.createElement('label');
@@ -39,7 +39,7 @@ class Template {
     checkboxWrapper.append(checkboxLabel);
     return checkboxWrapper;
   }
-  insertTodo(todo: todoObj): void {
+  insertTodo(todo: ItodoObj): void {
     const tasklist: Element | null = document.querySelector('.task-list');
     let task: HTMLDivElement = this.buildTodo(todo);
     let button = this.buildDelBtn(todo);

@@ -2,6 +2,7 @@ import { storeFilterStatus } from './Store';
 import { handleDD } from './dd';
 import { template } from './Template';
 import { emitter } from './Events';
+import { storeTodos } from './Store';
 
 class View {
   //input field
@@ -17,6 +18,7 @@ class View {
   private markAllCheckbox: HTMLInputElement = document.querySelector('#mark-all');
   //task list
   private tasklist: HTMLElement = document.querySelector('.task-list');
+  private clearCompletedBtn: HTMLButtonElement = document.querySelector('#clear-completed');
   constructor() {}
   //add listeners
   listenAll() {
@@ -25,7 +27,7 @@ class View {
     //emits events
     //onEnter
     this.input.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.code == 'Enter' && this.input.value != '') {
+      if ((e.code == 'Enter' || e.code == 'NumpadEnter') && this.input.value != '') {
         emitter.emit('event:onEnter', this.input.value);
         this.input.value = '';
       }
@@ -46,6 +48,11 @@ class View {
     this.markallBtn.addEventListener('click', () => {
       emitter.emit('event:MarkAll', this.markAllCheckbox.checked);
     });
+    //clear completed
+    this.clearCompletedBtn.addEventListener('click', () => {
+      let test = '';
+      emitter.emit('event:ClearCompleted', test);
+    });
     //filters
     this.allBtn.addEventListener('click', function () {
       filterCondition = 'all';
@@ -61,22 +68,32 @@ class View {
     });
   }
   //for solo todo
-  printTodo(todo: todoObj) {
+  printTodo(todo: ItodoObj) {
     template.insertTodo(todo);
-    View.showFooter(true);
-    View.count();
+    this.showFooter(true);
+    this.count();
     handleDD();
   }
   //delete todo from DOM
   delete(id: string): void {
     let task = document.getElementById(id);
     task.remove();
-    View.count();
+    this.count();
+  }
+  clearCompleted() {
+    let todosArray: NodeListOf<HTMLDivElement> = document.querySelectorAll('.task-list-task');
+    let completedTodosArr = Array.from(todosArray).filter((todo) => todo.classList.contains('completed'));
+
+    completedTodosArr.forEach((todo) => {
+      this.delete(todo.id);
+      storeTodos.delete(todo.id);
+    });
   }
   //switch isCompleted (marks) todo in DOM
   mark(id: string): void {
     let task = document.getElementById(id);
     task.classList.toggle('completed');
+    this.count();
   }
   //marks/unmarks all todos in DOM
   markAll(condition: boolean) {
@@ -93,9 +110,10 @@ class View {
         todo.className = 'task-list-task';
       }
     }
+    this.count();
   }
   //visibility of btns and counter block
-  static showFooter(param: boolean): void {
+  private showFooter(param: boolean): void {
     //counts and buttons block
     let butCountBar = document.querySelector('.task-list-footer-wrapper');
     if (param) {
@@ -105,13 +123,14 @@ class View {
     }
   }
   //counts
-  static count(): void {
+  private count(): void {
     let counter: HTMLDivElement = document.querySelector('.counter');
-    let todoArray = document.querySelectorAll('.task-list-task');
-    let x: number | null = todoArray.length;
+    let todoArray: NodeListOf<HTMLDivElement> = document.querySelectorAll('.task-list-task');
+    let toDisplayAr = Array.from(todoArray).filter((todo) => !todo.classList.contains('completed'));
+    let x: number | null = toDisplayAr.length;
     counter.innerHTML = `todo amount: ${x}`;
-    if (x == 0) {
-      View.showFooter(false);
+    if (todoArray.length == 0) {
+      this.showFooter(false);
     }
   }
   //filters when DOM is build
@@ -138,6 +157,7 @@ class View {
       }
 
       todo.setAttribute('style', style);
+      this.filterEnlight();
     }
   }
   getOrder(): null | number {
@@ -148,6 +168,24 @@ class View {
     }
 
     return +todo.dataset.order;
+  }
+  filterEnlight() {
+    let filterCondition: string = storeFilterStatus.getFilterStatus();
+    if (filterCondition == 'noFilter') {
+      return;
+    }
+    let btnArr: HTMLButtonElement[] = [this.activeBtn, this.allBtn, this.completedBtn];
+    btnArr.forEach((it) => it.setAttribute('style', 'background-color:#a1df2e'));
+    if (filterCondition == 'all') {
+      this.allBtn.setAttribute('style', 'background-color:red');
+      return;
+    }
+    if (filterCondition == 'completed') {
+      this.completedBtn.setAttribute('style', 'background-color:red');
+      return;
+    }
+
+    this.activeBtn.setAttribute('style', 'background-color:red');
   }
 }
 const view = new View();
