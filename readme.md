@@ -1,6 +1,6 @@
 <br />
 <p align="center">
-  <a href="https://github.com/damnedelf/firebase_WP_LINT_TS.git">
+  <a href="https://github.com/damnedelf/front_for_todo">
     <img src="src/assets/img/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -31,7 +31,7 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="https://github.com/damnedelf/firebase_WP_LINT_TS/issues">report bug, any questions</a></li>
+    <li><a href="https://github.com/damnedelf/front_for_todo/issues">report bug, any questions</a></li>
   </ol>
 </details>
 
@@ -68,7 +68,7 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-     git clone https://github.com/damnedelf/firebase_WP_LINT_TS.git
+     git clone https://github.com/damnedelf/front_for_todo
    ```
 2. GO to project folder
    ```sh
