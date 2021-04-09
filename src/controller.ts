@@ -1,9 +1,9 @@
 import { view } from './ts/View';
 import { storeTodos } from './ts/Store';
 import { storeFilterStatus } from './ts/Store';
-import { TodoModel } from './ts/model/TodoModel';
+// import { TodoModel } from './ts/model/TodoModel';
 import { emitter } from './ts/Events';
-
+// import { ItodoObj } from './/ts/interface/interface';
 import './styles/styles.scss';
 import './styles/nullstyle.scss';
 
@@ -20,7 +20,7 @@ storeTodos
     }
 
     if (todoArr.length > 1) {
-      orderN = todoArr[todoArr.length - 1].data.order;
+      orderN = todoArr[todoArr.length - 1].order;
     }
   })
   .then(() => {
@@ -30,16 +30,17 @@ storeTodos
   })
   .then(() => view.listenAll());
 //turn on all listeners
-// view.listenAll();
+view.listenAll();
 
 //subscribes on all handmade events
 emitter.subscribe(`event:onEnter`, async function (name: string) {
   orderN++;
-  const todoObj: ItodoObj = new TodoModel(name, orderN);
+  // const todoObj: IMongoTodo = new TodoModel(name, orderN);
 
-  storeTodos.post(todoObj).then((result) => {
-    todoObj.id = result;
-    view.printTodo(todoObj);
+  storeTodos.post(name, orderN).then((todoObject) => {
+    // todoObj.id = result;
+    todoObject.order = orderN;
+    view.printTodo(todoObject);
   });
   view.listenAll();
 });
@@ -54,11 +55,11 @@ emitter.subscribe('event:Delete', function (id: string) {
 });
 emitter.subscribe('event:Mark', function (id: string) {
   view.mark(id);
-  storeTodos.update(id, null);
+  storeTodos.update(id, null, null);
 });
-emitter.subscribe('event:MarkAll', function (condition: boolean) {
+emitter.subscribe('event:MarkAll', function (condition: string | null) {
   view.markAll(!condition);
-  storeTodos.updateAll(!condition);
+  storeTodos.update(null, condition, null);
 });
 emitter.subscribe('event:ClearCompleted', function () {
   view.clearCompleted();

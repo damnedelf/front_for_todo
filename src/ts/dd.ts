@@ -23,7 +23,6 @@ function handleDD(): void {
     const todoArray: any[] = [];
     for (const todoNode of todoNodeArray) {
       todoArray.push(todoNode);
-      console.log(todoNode);
     }
 
     const currentElem = todoArray.find((item) => item.id == reqBody.id);
@@ -42,7 +41,7 @@ function handleDD(): void {
 
     reqBody.order = orderN;
     //element id to change + order to change
-    storeTodos.update(null, reqBody);
+    storeTodos.update(reqBody.id, null, reqBody.order);
   });
 
   const getNextElement = (cursorPosition: number, currentElement: HTMLDivElement) => {

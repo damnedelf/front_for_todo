@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import { eventContainerType } from './interface/interface';
 type eventDataType = string | boolean | number;
 
 class EventHandler {

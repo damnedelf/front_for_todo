@@ -12,17 +12,25 @@ interface ItodoObj {
   data: Idata;
 }
 //hotfix for firestore typings
-interface Ifire {
-  id: string;
-  data: any;
-}
+
 //describes collection for eventhandler
 interface eventContainerType {
   [key: string]: Array<Function>;
 }
 
 //req body for order
-interface IorderBody {
-  id: string;
+interface Iheaders {
+  'Content-Type': string;
+}
+interface Ibody {
+  order: number | null;
+  condition: string | null;
+  id: string | null;
+}
+interface IMongoTodo {
+  _id: string;
+  name: string;
+  isCompleted: boolean;
   order: number;
 }
+export { IMongoTodo, Ibody, eventContainerType };

@@ -1,74 +1,71 @@
-import { QueryDocumentSnapshot } from '@firebase/firestore-types';
-
-import { db } from './firestoreConfig';
-const todosRef = db.collection('todos');
+import { IMongoTodo } from './interface/interface';
 
 class StoreTodos {
-  async post(todo: ItodoObj) {
-    try {
-      const newTodo = await todosRef.add({
-        name: `${todo.data.name}`,
+  private reqUrl = 'http://localhost:5500/api/todo';
 
-        isCompleted: todo.data.isCompleted,
-        order: todo.data.order,
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  private async reqHandler(url: string, method = 'GET', dataObject: object) {
+    try {
+      const headers: any = {};
+      let body: string;
+      if (dataObject) {
+        headers['Content-Type'] = 'application/json';
+
+        body = JSON.stringify(dataObject);
+      }
+
+      const response = await fetch(url, {
+        method,
+        headers,
+        body,
       });
-      return newTodo.id;
+
+      if (response.status == 204) {
+        return;
+      }
+      return await response.json();
+    } catch (error) {
+      console.warn(error.message);
+    }
+  }
+  //request for creating new todo. Expecting id as response
+  async post(name: string, order: number) {
+    try {
+      const reqBody = { name: name, order: order };
+
+      const id = await this.reqHandler(this.reqUrl, 'POST', reqBody);
+
+      return id;
     } catch (error) {
       console.log(error);
     }
   }
   //get todoArray
   async getAll() {
-    const todoArray: ItodoObj[] = [];
+    const todoArr: IMongoTodo[] = await this.reqHandler(this.reqUrl, 'GET', null);
 
-    try {
-      const todos = await todosRef.orderBy('order').get();
-      await todos.forEach((doc: QueryDocumentSnapshot<any>) => {
-        todoArray.push({ data: doc.data(), id: doc.id });
-      });
-    } catch (error) {
-      console.log(`get all error ${error}`);
-    }
-
-    return todoArray;
+    return todoArr;
   }
   //for delete
   async delete(id: string) {
     try {
-      await todosRef.doc(id).delete();
+      const reqBody = { id: id };
+      this.reqHandler(this.reqUrl, 'DELETE', reqBody);
     } catch (error) {
       console.log(`delete: ===>>> ${error}`);
     }
   }
 
   // mark isCompleted
-  async update(id: string, reqBody: IorderBody) {
+  async update(id: string, condition: string | null, order: number) {
     try {
-      if (!reqBody) {
-        const todoForUpdate = await todosRef.doc(id).get();
-
-        const condition = todoForUpdate.data().isCompleted;
-
-        todosRef.doc(id).update({ isCompleted: !condition });
-      } else {
-        await todosRef.doc(reqBody.id).update({ order: reqBody.order });
-      }
-    } catch (error) {
-      console.log(`update===>>>${error}`);
-    }
-  }
-  ///for mark/unmark all isCompleted
-  async updateAll(status: boolean) {
-    try {
-      const allTodos = await db.collection('todos').get();
-      await allTodos.forEach((todo: QueryDocumentSnapshot) => {
-        todo.ref.update({
-          isCompleted: status,
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      const reqBody = {
+        id: id,
+        condition: condition,
+        order: order,
+      };
+      this.reqHandler(this.reqUrl, 'PATCH', reqBody);
+    } catch (error) {}
   }
 }
 //local storage for filter condition

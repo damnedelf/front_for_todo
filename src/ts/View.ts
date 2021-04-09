@@ -4,6 +4,7 @@ import { handleDD } from './dd';
 import { template } from './Template';
 import { emitter } from './Events';
 import { storeTodos } from './Store';
+import { IMongoTodo } from './interface/interface';
 
 class View {
   //input field
@@ -74,7 +75,7 @@ class View {
     });
   }
   //for solo todo
-  printTodo(todo: ItodoObj) {
+  printTodo(todo: IMongoTodo) {
     template.insertTodo(todo);
     this.showFooter(true);
     this.count();

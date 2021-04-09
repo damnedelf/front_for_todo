@@ -7,7 +7,7 @@
   <h3 align="center">ToDO app</h3>
 
   <p align="center">
-   Firebase.Firestore +Typescript
+   Typescript Front End for todo+mongo
     <br />
     
   </p>
@@ -112,7 +112,7 @@ Webpack bundling all code (html\styles\ts) and put to the /dist folder. Just run
 <br />
 mapping disabled
 
-**Also u can change firestore config by modifying firestoreConfig.ts**
+**Also u can change connection string in modifying private property reqUrl in src/ts/Store.ts**
 
 ## Contact
 

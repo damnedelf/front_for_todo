@@ -52,9 +52,9 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "@firebase/firestore-types": "^2.2.0",
+ 
     "eslint-config-airbnb": "^18.2.1",
-    "firebase": "^8.3.1",
+   
     "npm": "^7.5.4"
   }
 }
