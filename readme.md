@@ -41,7 +41,7 @@
      <img src="src/assets/img/screenShotProj.png" alt="Logo" width="auto" height="300px">
   </a>
 
-**Homework for Intspirit dev_courses. TodoApp-firestore as db**
+**Homework for Intspirit dev_courses. Front end part for todo+mongo**
 
 #### mail: damnedelf@ya.ru
 
@@ -72,7 +72,7 @@ This is an example of how to list things you need to use the software and how to
    ```
 2. GO to project folder
    ```sh
-   cd firebase_WP_LINT_TS
+   cd front_for_todo
    ```
 3. Install dependency packages
    ```sh
