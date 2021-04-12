@@ -34,7 +34,6 @@ class StoreTodos {
       const reqBody = { name: name, order: order };
 
       const id = await this.reqHandler(this.reqUrl, 'POST', reqBody);
-
       return id;
     } catch (error) {
       console.log(error);
@@ -43,7 +42,6 @@ class StoreTodos {
   //get todoArray
   async getAll() {
     const todoArr: IMongoTodo[] = await this.reqHandler(this.reqUrl, 'GET', null);
-
     return todoArr;
   }
   //for delete

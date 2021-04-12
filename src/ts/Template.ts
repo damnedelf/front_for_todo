@@ -14,7 +14,7 @@ class Template {
     } else {
       newTodoWrapper.className = 'task-list-task dragster-block';
     }
-    newTodoWrapper.id = todo._id;
+    newTodoWrapper.id = todo.id + '';
     newTodoWrapper.setAttribute('data-order', `${todo.order}`);
     newTodoWrapper.setAttribute('draggable', 'true');
     newTodoWrapper.append(taskName);
@@ -23,7 +23,7 @@ class Template {
   private buildDelBtn(todo: IMongoTodo): HTMLButtonElement {
     const button = document.createElement('button');
     button.className = 'close';
-    button.id = `delete-${todo._id}`;
+    button.id = `delete-${todo.id}`;
     return button;
   }
   private buildCheckbox(todo: IMongoTodo): HTMLDivElement {
@@ -33,11 +33,11 @@ class Template {
     checkbox.checked = todo.isCompleted;
     checkboxWrapper.className = 'checkbox';
     checkbox.setAttribute('type', 'checkbox');
-    checkbox.id = `mark-${todo._id}`;
+    checkbox.id = `mark-${todo.id}`;
     checkbox.className = 'checkbox-input';
     checkboxLabel.className = 'checkbox-label';
     checkboxLabel.setAttribute('for', checkbox.id);
-    checkboxLabel.id = `label-${todo._id}`;
+    checkboxLabel.id = `label-${todo.id}`;
     checkboxWrapper.append(checkbox);
     checkboxWrapper.append(checkboxLabel);
     return checkboxWrapper;

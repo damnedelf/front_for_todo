@@ -28,7 +28,7 @@ interface Ibody {
   id: string | null;
 }
 interface IMongoTodo {
-  _id: string;
+  id: string;
   name: string;
   isCompleted: boolean;
   order: number;

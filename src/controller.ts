@@ -34,11 +34,11 @@ view.listenAll();
 
 //subscribes on all handmade events
 emitter.subscribe(`event:onEnter`, async function (name: string) {
+  if (orderN == undefined) {
+    orderN = 1;
+  }
   orderN++;
-  // const todoObj: IMongoTodo = new TodoModel(name, orderN);
-
-  storeTodos.post(name, orderN).then((todoObject) => {
-    // todoObj.id = result;
+  await storeTodos.post(name, orderN).then((todoObject) => {
     todoObject.order = orderN;
     view.printTodo(todoObject);
   });
