@@ -41,7 +41,7 @@ function handleDD(): void {
 
     reqBody.order = orderN;
     //element id to change + order to change
-    storeTodos.update(reqBody.id, null, reqBody.order);
+    storeTodos.update(reqBody.id, reqBody.order);
   });
 
   const getNextElement = (cursorPosition: number, currentElement: HTMLDivElement) => {

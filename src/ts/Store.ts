@@ -55,13 +55,21 @@ class StoreTodos {
   }
 
   // mark isCompleted
-  async update(id: string, condition: string | null, order: number) {
+  async update(id: string, order: number) {
     try {
       const reqBody = {
-        condition: condition,
         order: order,
       };
       this.reqHandler(this.reqUrl + '/' + id, 'PATCH', reqBody);
+    } catch (error) {}
+  }
+
+  async markAll(condition: string | null) {
+    try {
+      const reqBody = {
+        condition: condition,
+      };
+      this.reqHandler(this.reqUrl + '/', 'PUT', reqBody);
     } catch (error) {}
   }
 }

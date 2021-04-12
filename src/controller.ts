@@ -55,11 +55,11 @@ emitter.subscribe('event:Delete', function (id: string) {
 });
 emitter.subscribe('event:Mark', function (id: string) {
   view.mark(id);
-  storeTodos.update(id, null, null);
+  storeTodos.update(id, null);
 });
 emitter.subscribe('event:MarkAll', function (condition: string | null) {
   view.markAll(!condition);
-  storeTodos.update(null, condition, null);
+  storeTodos.markAll(condition);
 });
 emitter.subscribe('event:ClearCompleted', function () {
   view.clearCompleted();
