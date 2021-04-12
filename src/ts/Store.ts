@@ -49,8 +49,8 @@ class StoreTodos {
   //for delete
   async delete(id: string) {
     try {
-      const reqBody = { id: id };
-      this.reqHandler(this.reqUrl, 'DELETE', reqBody);
+      const reqBody = {};
+      this.reqHandler(this.reqUrl + '/' + id, 'DELETE', reqBody);
     } catch (error) {
       console.log(`delete: ===>>> ${error}`);
     }
@@ -60,11 +60,10 @@ class StoreTodos {
   async update(id: string, condition: string | null, order: number) {
     try {
       const reqBody = {
-        id: id,
         condition: condition,
         order: order,
       };
-      this.reqHandler(this.reqUrl, 'PATCH', reqBody);
+      this.reqHandler(this.reqUrl + '/' + id, 'PATCH', reqBody);
     } catch (error) {}
   }
 }
